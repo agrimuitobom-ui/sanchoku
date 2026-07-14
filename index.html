@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>太陽のめぐみ産直市</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
+    </style>
+</head>
+<body class="bg-orange-50 text-gray-800 min-h-screen flex flex-col">
+
+    <!-- ※プレビューテスト用のUIです。本番環境ではFirebase Authで裏側で判定し、一般ユーザーにはソースコードごと見せないのがベストです。 -->
+    <div class="bg-gray-800 text-white p-2 text-center text-sm flex justify-center items-center gap-4 sticky top-0 z-50">
+        <span><i class="fas fa-info-circle mr-1"></i> プレビュー用機能：</span>
+        <label class="flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer" onchange="toggleAdminMode(this.checked)">
+            <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500 relative"></div>
+            <span class="ml-3 text-sm font-medium">店舗管理者モードをONにする</span>
+        </label>
+    </div>
+
+    <header class="bg-white shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-green-700 flex items-center">
+                <i class="fas fa-leaf mr-2 text-green-500"></i>
+                太陽のめぐみ産直市
+            </h1>
+            <nav class="hidden md:flex gap-6 text-sm font-medium text-gray-600">
+                <a href="#" class="hover:text-green-600 transition">ホーム</a>
+                <a href="#products" class="hover:text-green-600 transition">おすすめ商品</a>
+                <a href="#reviews" class="hover:text-green-600 transition">お客様の声</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <section class="relative bg-cover bg-center h-80 flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=1200&q=80');">
+            <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+            <div class="relative z-10 text-center text-white px-4">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg leading-tight">太陽と大地の恵みを、<br>そのまま食卓へ。</h2>
+                <p class="text-lg md:text-xl drop-shadow-md font-light">地元農家が丹精込めて育てた新鮮な野菜を毎日お届けします。</p>
+            </div>
+        </section>
+
+        <div class="max-w-5xl mx-auto px-4 py-12">
+            <section id="products" class="mb-16">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">本日のピックアップ</h2>
+                    <p class="text-gray-500">朝採れの新鮮な農産物をご紹介します。</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Product 1 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+                        <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&q=80" alt="完熟トマト" class="w-full h-48 object-cover">
+                        <div class="p-5">
+                            <span class="text-xs font-bold bg-green-100 text-green-800 px-2 py-1 rounded-full mb-2 inline-block">農家直送</span>
+                            <h3 class="text-lg font-bold mb-1">もぎたて完熟トマト</h3>
+                            <p class="text-sm text-gray-600 mb-3">糖度抜群！サラダにそのままでも、煮込み料理にも最適です。</p>
+                            <p class="text-orange-600 font-bold">¥380 <span class="text-xs text-gray-400 font-normal">/ 1袋</span></p>
+                        </div>
+                    </div>
+                    <!-- Product 2 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+                        <img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=400&q=80" alt="朝採れとうもろこし" class="w-full h-48 object-cover">
+                        <div class="p-5">
+                            <span class="text-xs font-bold bg-green-100 text-green-800 px-2 py-1 rounded-full mb-2 inline-block">期間限定</span>
+                            <h3 class="text-lg font-bold mb-1">朝採れスイートコーン</h3>
+                            <p class="text-sm text-gray-600 mb-3">生で食べられるほど甘い！お子様のおやつにも大人気です。</p>
+                            <p class="text-orange-600 font-bold">¥150 <span class="text-xs text-gray-400 font-normal">/ 1本</span></p>
+                        </div>
+                    </div>
+                    <!-- Product 3 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+                        <img src="https://images.unsplash.com/photo-1598965675045-45c5e7263625?w=400&q=80" alt="平飼い新鮮卵" class="w-full h-48 object-cover">
+                        <div class="p-5">
+                            <span class="text-xs font-bold bg-green-100 text-green-800 px-2 py-1 rounded-full mb-2 inline-block">定番人気</span>
+                            <h3 class="text-lg font-bold mb-1">自然の恵み 平飼い卵</h3>
+                            <p class="text-sm text-gray-600 mb-3">濃厚な黄身が特徴。卵かけご飯でぜひ味わってみてください。</p>
+                            <p class="text-orange-600 font-bold">¥450 <span class="text-xs text-gray-400 font-normal">/ 10個入</span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="reviews" class="max-w-3xl mx-auto">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">お客様の声</h2>
+                    <p class="text-gray-500">店舗や商品へのご感想をお寄せください。</p>
+                </div>
+
+                <!-- Comment Submission Form -->
+                <form id="new-comment-form" class="mb-10 bg-white p-6 rounded-xl shadow-sm border border-green-100">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">お名前 (ニックネーム可)</label>
+                        <input type="text" id="comment-author" required placeholder="例: トマト大好き" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 px-4 py-2 border outline-none transition">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">ご感想・レビュー</label>
+                        <textarea id="comment-text" required rows="3" placeholder="いつも新鮮な野菜をありがとうございます！" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 px-4 py-2 border outline-none transition"></textarea>
+                    </div>
+                    <div id="error-message" class="hidden text-red-600 text-sm mb-3">投稿に失敗しました。時間をおいて再度お試しください。</div>
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 px-4 rounded-md transition-colors flex justify-center items-center">
+                        <i class="fas fa-paper-plane mr-2"></i> 投稿する
+                    </button>
+                </form>
+
+                <!-- Comments Timeline -->
+                <div id="comments-container" class="space-y-6">
+                    <!-- Comments will be injected here by JavaScript -->
+                    <div class="text-center text-gray-500 py-4"><i class="fas fa-spinner fa-spin mr-2"></i>コメントを読み込み中...</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 py-8 text-center text-sm">
+        <p>&copy; 2026 太陽のめぐみ産直市. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, updateDoc, doc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Environment Check & Firebase Setup
+        const isCanvasEnv = typeof __app_id !== 'undefined' && typeof __firebase_config !== 'undefined';
+        
+        let db, auth, commentsCollection;
+        let commentsList = []; // Local memory for sorting and rendering
+        let isAdminMode = false; // State for the preview toggle
+
+        // Expose toggle function to global window for the HTML checkbox
+        window.toggleAdminMode = (isChecked) => {
+            isAdminMode = isChecked;
+            renderComments(); // Re-render to show/hide reply boxes
+        };
+
+        async function initApp() {
+            if (isCanvasEnv) {
+                const appId = __app_id;
+                const firebaseConfig = JSON.parse(__firebase_config);
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                
+                // Canvas rule: use specific path for public data
+                commentsCollection = collection(db, 'artifacts', appId, 'public', 'data', 'comments');
+
+                // Canvas rule: Auth is required before queries
+                if (typeof __initial_auth_token !== 'undefined') {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                // Real-time listener
+                onSnapshot(commentsCollection, (snapshot) => {
+                    commentsList = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+                    renderComments();
+                }, (error) => {
+                    console.error("Error listening to comments:", error);
+                    document.getElementById('comments-container').innerHTML = '<p class="text-center text-red-500">データの読み込みに失敗しました。</p>';
+                });
+
+            } else {
+                // Fallback for viewing HTML outside of Canvas environment
+                commentsList = [
+                    { id: '1', authorName: 'ご近所さん', text: '昨日買ったトマト、すごく甘くて美味しかったです！子供も喜んで食べました。', createdAt: { toMillis: () => Date.now() - 86400000 }, replyText: '嬉しいお言葉ありがとうございます！今の時期のトマトは特に糖度が高くおすすめです。またのご来店をお待ちしております。', repliedAt: { toMillis: () => Date.now() - 40000000 } },
+                    { id: '2', authorName: '佐藤', text: 'いつも新鮮な野菜が安く買えて助かっています。', createdAt: { toMillis: () => Date.now() - 3600000 } }
+                ];
+                renderComments();
+            }
+        }
+
+        function renderComments() {
+            const container = document.getElementById('comments-container');
+            container.innerHTML = '';
+
+            if (commentsList.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 py-8 bg-white rounded-lg border border-dashed border-gray-300">まだコメントはありません。最初のレビューを投稿してみましょう！</p>';
+                return;
+            }
+
+            // Canvas rule: No complex queries, sort in memory
+            const sortedComments = [...commentsList].sort((a, b) => {
+                const timeA = a.createdAt ? (typeof a.createdAt.toMillis === 'function' ? a.createdAt.toMillis() : a.createdAt) : Date.now();
+                const timeB = b.createdAt ? (typeof b.createdAt.toMillis === 'function' ? b.createdAt.toMillis() : b.createdAt) : Date.now();
+                return timeB - timeA; // Descending order (newest first)
+            });
+
+            sortedComments.forEach(comment => {
+                const isReplied = !!comment.replyText;
+                
+                // Construct Admin Reply UI
+                let adminUIPart = '';
+                if (isReplied) {
+                    // Show existing reply
+                    adminUIPart = `
+                    <div class="mt-4 bg-orange-50 p-4 rounded-md border border-orange-100 ml-4 relative">
+                        <div class="absolute -left-2 top-4 w-4 h-4 bg-orange-50 transform rotate-45 border-l border-b border-orange-100"></div>
+                        <div class="flex items-center mb-1">
+                            <i class="fas fa-store text-orange-500 mr-2"></i>
+                            <span class="font-bold text-sm text-orange-800">店舗からの返信</span>
+                            <span class="text-xs text-gray-400 ml-auto">${formatDate(comment.repliedAt)}</span>
+                        </div>
+                        <p class="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">${escapeHTML(comment.replyText)}</p>
+                    </div>`;
+                } else if (isAdminMode) {
+                    // Show input form for admin
+                    adminUIPart = `
+                    <div class="mt-4 ml-4 flex gap-2">
+                        <i class="fas fa-reply text-gray-300 mt-2"></i>
+                        <textarea id="reply-input-${comment.id}" rows="2" placeholder="管理者として返信を入力..." class="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-orange-500 focus:border-orange-500 outline-none"></textarea>
+                        <button onclick="submitReply('${comment.id}')" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm transition font-bold self-end whitespace-nowrap">返信する</button>
+                    </div>`;
+                }
+
+                // Construct full comment card
+                const html = `
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 transition-all hover:shadow-md">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center font-bold mr-3">
+                                ${escapeHTML(comment.authorName).charAt(0) || '匿'}
+                            </div>
+                            <h4 class="font-bold text-gray-800">${escapeHTML(comment.authorName)}</h4>
+                        </div>
+                        <span class="text-xs text-gray-400"><i class="far fa-clock mr-1"></i>${formatDate(comment.createdAt)}</span>
+                    </div>
+                    <p class="text-gray-700 whitespace-pre-wrap pl-11">${escapeHTML(comment.text)}</p>
+                    <div class="pl-7">
+                        ${adminUIPart}
+                    </div>
+                </div>`;
+                
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        // Handle new user comment submission
+        document.getElementById('new-comment-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const authorInput = document.getElementById('comment-author');
+            const textInput = document.getElementById('comment-text');
+            const errorMsg = document.getElementById('error-message');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+
+            const authorName = authorInput.value.trim();
+            const text = textInput.value.trim();
+            if(!authorName || !text) return;
+
+            errorMsg.classList.add('hidden');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> 送信中...';
+
+            if (isCanvasEnv) {
+                try {
+                    await addDoc(commentsCollection, {
+                        authorName,
+                        text,
+                        createdAt: serverTimestamp()
+                    });
+                    authorInput.value = '';
+                    textInput.value = '';
+                } catch(error) {
+                    console.error("Error adding document: ", error);
+                    errorMsg.classList.remove('hidden');
+                }
+            } else {
+                // Mock behavior
+                commentsList.unshift({
+                    id: Date.now().toString(),
+                    authorName,
+                    text,
+                    createdAt: { toMillis: () => Date.now() }
+                });
+                authorInput.value = '';
+                textInput.value = '';
+                renderComments();
+            }
+            
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> 投稿する';
+        });
+
+        // Handle admin reply submission (exposed globally for inline onclick)
+        window.submitReply = async (commentId) => {
+            const replyInput = document.getElementById(`reply-input-${commentId}`);
+            const replyText = replyInput.value.trim();
+            if (!replyText) return;
+
+            if (isCanvasEnv) {
+                try {
+                    const docRef = doc(db, 'artifacts', __app_id, 'public', 'data', 'comments', commentId);
+                    await updateDoc(docRef, {
+                        replyText: replyText,
+                        repliedAt: serverTimestamp()
+                    });
+                } catch(error) {
+                    console.error("Error updating reply:", error);
+                    // Usually due to security rules if not admin, but handled softly here
+                }
+            } else {
+                // Mock behavior
+                const comment = commentsList.find(c => c.id === commentId);
+                if(comment) {
+                    comment.replyText = replyText;
+                    comment.repliedAt = { toMillis: () => Date.now() };
+                    renderComments();
+                }
+            }
+        };
+
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag])
+            );
+        }
+
+        function formatDate(timestamp) {
+            if (!timestamp) return '送信中...';
+            let date;
+            if (typeof timestamp.toDate === 'function') {
+                date = timestamp.toDate();
+            } else if (typeof timestamp.toMillis === 'function') {
+                date = new Date(timestamp.toMillis());
+            } else if (typeof timestamp === 'number') {
+                date = new Date(timestamp);
+            } else {
+                date = new Date(); // fallback
+            }
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const d = String(date.getDate()).padStart(2, '0');
+            const h = String(date.getHours()).padStart(2, '0');
+            const min = String(date.getMinutes()).padStart(2, '0');
+            return `${y}/${m}/${d} ${h}:${min}`;
+        }
+
+        // Boot up
+        initApp();
+    </script>
+</body>
+</html>
